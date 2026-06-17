@@ -1,21 +1,3 @@
-"""
-visualization.py
-----------------
-Módulo de visualização de dados para análise de partidas de Clash Royale.
-
-Responsabilidades:
-    - Gerar gráficos a partir dos DataFrames produzidos pelo módulo analysis.py.
-    - Retornar objetos Figure do Matplotlib para uso externo (exibição, exportação).
-    - Não realizar cálculos ou transformações de dados.
-
-Dependências:
-    - matplotlib >= 3.7
-    - pandas >= 1.5
-
-Pipeline esperado:
-    preprocessing → feature_engineering → analysis → visualization
-"""
-
 from __future__ import annotations
 
 import logging
@@ -24,20 +6,14 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import pandas as pd
 from matplotlib.figure import Figure
+from cycler import cycler
 
-# ---------------------------------------------------------------------------
-# Configuração de logging
-# ---------------------------------------------------------------------------
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)-8s | %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 logger = logging.getLogger(__name__)
-
-# ---------------------------------------------------------------------------
-# Tema visual — identidade Clash Royale
-# ---------------------------------------------------------------------------
 
 PALETTE = {
     "win":        "#4FC3F7",   # azul arena — vitória
@@ -63,6 +39,10 @@ RESULT_COLOR_MAP: dict[str, str] = {
 FONT_TITLE = {"fontsize": 15, "fontweight": "bold", "color": PALETTE["text"]}
 FONT_LABEL = {"fontsize": 11, "color": PALETTE["text_dim"]}
 FONT_TICK  = {"labelsize": 10, "colors": PALETTE["text_dim"]}
+DEFAULT_COLORS = [
+    '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', 
+    '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
+]
 
 # Aplica tema escuro globalmente a todas as figuras do módulo
 def _apply_global_style() -> None:
@@ -82,14 +62,10 @@ def _apply_global_style() -> None:
         "legend.edgecolor":  PALETTE["grid"],
         "legend.labelcolor": PALETTE["text"],
         "font.family":       "DejaVu Sans",
+        "axes.prop_cycle":   cycler(color=DEFAULT_COLORS),
     })
 
 _apply_global_style()
-
-
-# ---------------------------------------------------------------------------
-# Helpers internos
-# ---------------------------------------------------------------------------
 
 def _require_columns(df: pd.DataFrame, *columns: str, context: str = "") -> None:
     """Valida colunas obrigatórias antes de plotar.
@@ -156,11 +132,6 @@ def _style_axes(ax: plt.Axes, title: str, xlabel: str, ylabel: str) -> None:
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-
-# ---------------------------------------------------------------------------
-# 1. Distribuição de resultados (gráfico de barras)
-# ---------------------------------------------------------------------------
-
 def plot_result_distribution(df_results: pd.DataFrame) -> Figure:
     """Gera um gráfico de barras com a distribuição dos resultados das partidas.
 
@@ -221,11 +192,6 @@ def plot_result_distribution(df_results: pd.DataFrame) -> Figure:
     fig.tight_layout()
     logger.info("Gráfico 'result_distribution' gerado.")
     return fig
-
-
-# ---------------------------------------------------------------------------
-# 2. Win rate por hora (gráfico de linha)
-# ---------------------------------------------------------------------------
 
 def plot_win_rate_by_hour(df_hours: pd.DataFrame) -> Figure:
     """Gera um gráfico de linha com a taxa de vitória por hora do dia.
@@ -289,11 +255,6 @@ def plot_win_rate_by_hour(df_hours: pd.DataFrame) -> Figure:
     logger.info("Gráfico 'win_rate_by_hour' gerado.")
     return fig
 
-
-# ---------------------------------------------------------------------------
-# 3. Cartas mais utilizadas (gráfico de barras horizontal)
-# ---------------------------------------------------------------------------
-
 def plot_most_used_cards(df_cards: pd.DataFrame, top_n: int = 15) -> Figure:
     """Gera um gráfico de barras horizontais com as cartas mais utilizadas.
 
@@ -354,11 +315,6 @@ def plot_most_used_cards(df_cards: pd.DataFrame, top_n: int = 15) -> Figure:
     fig.tight_layout()
     logger.info("Gráfico 'most_used_cards' gerado (top %d).", top_n)
     return fig
-
-
-# ---------------------------------------------------------------------------
-# 4. Cartas com maior win rate (gráfico de barras horizontal)
-# ---------------------------------------------------------------------------
 
 def plot_cards_win_rate(df_cards: pd.DataFrame, top_n: int = 15) -> Figure:
     """Gera um gráfico de barras horizontais com o win rate por carta.
@@ -512,11 +468,6 @@ def plot_trophy_histogram(
     logger.info("Histograma 'trophy_histogram' gerado (%d bins).", bins)
     return fig
 
-
-# ---------------------------------------------------------------------------
-# Função agregadora: gera todos os gráficos de uma vez
-# ---------------------------------------------------------------------------
-
 def plot_all(
     analysis_results: dict[str, pd.DataFrame],
     df_raw: pd.DataFrame | None = None,
@@ -569,10 +520,6 @@ def plot_all(
     logger.info("=== %d gráfico(s) gerado(s). ===", len(figures))
     return figures
 
-
-# ---------------------------------------------------------------------------
-# Entry point para testes rápidos via CLI
-# ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     import sys

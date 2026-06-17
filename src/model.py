@@ -1,22 +1,3 @@
-"""
-model.py
---------
-Módulo de modelagem preditiva para análise de partidas de Clash Royale.
-
-Responsabilidades:
-    - Treinar um RandomForestClassifier para prever vitórias (win_binary).
-    - Avaliar o modelo com métricas de classificação.
-    - Retornar o modelo treinado e as métricas em estruturas tipadas.
-
-Dependências:
-    - scikit-learn >= 1.3
-    - pandas >= 1.5
-    - numpy >= 1.23
-
-Pipeline esperado:
-    preprocessing → feature_engineering → model.train_model()
-"""
-
 from __future__ import annotations
 
 import logging
@@ -38,19 +19,12 @@ from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-# ---------------------------------------------------------------------------
-# Configuração de logging
-# ---------------------------------------------------------------------------
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)-8s | %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 logger = logging.getLogger(__name__)
-
-# ---------------------------------------------------------------------------
-# Constantes
-# ---------------------------------------------------------------------------
 
 FEATURES: list[str] = [
     "player_starting_trophies",
@@ -74,10 +48,6 @@ RF_DEFAULT_PARAMS: dict[str, Any] = {
     "n_jobs":            -1,           # usa todos os núcleos disponíveis
 }
 
-
-# ---------------------------------------------------------------------------
-# Estruturas de dados tipadas
-# ---------------------------------------------------------------------------
 
 @dataclass
 class ModelMetrics:
@@ -153,10 +123,6 @@ class TrainingResult:
     features: list[str] = field(default_factory=lambda: FEATURES.copy())
     target:   str = TARGET
 
-
-# ---------------------------------------------------------------------------
-# Helpers internos
-# ---------------------------------------------------------------------------
 
 def _validate_dataframe(df: pd.DataFrame) -> None:
     """Valida que o DataFrame possui todas as colunas necessárias e dados suficientes.
@@ -260,11 +226,6 @@ def _compute_metrics(
         test_size=len(y_test),
         train_size=len(y_train),
     )
-
-
-# ---------------------------------------------------------------------------
-# API pública
-# ---------------------------------------------------------------------------
 
 def train_model(
     df: pd.DataFrame,
@@ -421,11 +382,6 @@ def predict_proba(model: Pipeline, data: pd.DataFrame) -> np.ndarray:
         raise KeyError(f"Features ausentes para predição: {missing}.")
 
     return model.predict_proba(data[FEATURES])
-
-
-# ---------------------------------------------------------------------------
-# Entry point para testes rápidos via CLI
-# ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     import sys

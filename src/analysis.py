@@ -1,20 +1,3 @@
-"""
-analysis.py
------------
-Módulo de análise estatística de partidas de Clash Royale.
-
-Responsabilidades:
-    - Calcular métricas agregadas a partir de um DataFrame enriquecido.
-    - Retornar DataFrames prontos para visualização ou exportação.
-    - Não gerar gráficos (responsabilidade do módulo de visualização).
-
-Dependências:
-    - pandas >= 1.5
-
-Pipeline esperado:
-    preprocessing.preprocess() → feature_engineering.create_features() → analysis.*
-"""
-
 from __future__ import annotations
 
 import logging

@@ -1,16 +1,3 @@
-"""
-preprocessing.py
-----------------
-Módulo de pré-processamento de dados para análise de partidas de Clash Royale.
-
-Responsabilidades:
-    - Carregamento de CSV
-    - Remoção de duplicatas
-    - Tratamento de valores nulos
-    - Conversão e padronização de tipos
-    - Padronização de nomes de colunas
-"""
-
 from __future__ import annotations
 
 import logging
@@ -18,9 +5,6 @@ from pathlib import Path
 
 import pandas as pd
 
-# ---------------------------------------------------------------------------
-# Configuração de logging
-# ---------------------------------------------------------------------------
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)-8s | %(message)s",
@@ -28,9 +12,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# ---------------------------------------------------------------------------
-# Constantes
-# ---------------------------------------------------------------------------
 DATETIME_COLUMN = "battle_time"
 DATETIME_FORMAT = "%Y%m%dT%H%M%S.%fZ"  # ex.: 20240315T183045.000Z
 
@@ -74,10 +55,6 @@ NULL_FILL_DEFAULTS: dict[str, object] = {
     "opponent_deck_hash": "",
 }
 
-# ---------------------------------------------------------------------------
-# Funções auxiliares
-# ---------------------------------------------------------------------------
-
 def _validate_columns(df: pd.DataFrame) -> None:
     """Valida se o DataFrame contém todas as colunas esperadas.
 
@@ -93,11 +70,6 @@ def _validate_columns(df: pd.DataFrame) -> None:
             f"As seguintes colunas esperadas estão ausentes no arquivo: {missing}"
         )
     logger.info("Validação de colunas concluída — todas as %d colunas presentes.", len(EXPECTED_COLUMNS))
-
-
-# ---------------------------------------------------------------------------
-# Funções principais
-# ---------------------------------------------------------------------------
 
 def load_csv(filepath: str | Path, encoding: str = "utf-8") -> pd.DataFrame:
     """Carrega um arquivo CSV em um DataFrame do Pandas.
@@ -314,11 +286,6 @@ def set_optimal_dtypes(df: pd.DataFrame) -> pd.DataFrame:
     logger.info("Tipos de dados otimizados.")
     return df
 
-
-# ---------------------------------------------------------------------------
-# Pipeline principal
-# ---------------------------------------------------------------------------
-
 def preprocess(filepath: str | Path, encoding: str = "utf-8") -> pd.DataFrame:
     """Executa o pipeline completo de pré-processamento.
 
@@ -358,11 +325,6 @@ def preprocess(filepath: str | Path, encoding: str = "utf-8") -> pd.DataFrame:
         *df.shape,
     )
     return df
-
-
-# ---------------------------------------------------------------------------
-# Entry point para testes rápidos via CLI
-# ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     import sys

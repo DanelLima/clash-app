@@ -1,17 +1,3 @@
-"""
-feature_engineering.py
------------------------
-Módulo de engenharia de features para análise de partidas de Clash Royale.
-
-Responsabilidades:
-    - Criar features derivadas a partir de um DataFrame já limpo.
-    - Enriquecer o DataFrame com informações contextuais e estatísticas.
-
-Dependências:
-    - pandas >= 1.5
-    - numpy >= 1.23
-"""
-
 from __future__ import annotations
 
 import logging
