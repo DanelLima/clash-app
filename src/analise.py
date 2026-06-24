@@ -1,8 +1,3 @@
-"""
-analise.py
-Calcula metricas agregadas e retorna DataFrames prontos para visualizacao.
-"""
-
 import logging
 import pandas as pd
 

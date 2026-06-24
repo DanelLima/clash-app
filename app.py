@@ -1,12 +1,3 @@
-"""
-app.py
-Ponto de entrada do dashboard Streamlit.
-Orquestra carregamento, analise, visualizacao e modelo.
-
-Para executar:
-    streamlit run app.py
-"""
-
 from __future__ import annotations
 
 import io

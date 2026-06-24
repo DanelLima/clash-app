@@ -1,8 +1,3 @@
-"""
-engenharia_features.py
-Cria novas colunas derivadas para enriquecer a analise.
-"""
-
 import logging
 import pandas as pd
 
@@ -10,17 +5,6 @@ logger = logging.getLogger(__name__)
 
 
 def criar_features(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Adiciona colunas derivadas ao dataframe.
-
-    Novas colunas criadas:
-        - vitoria_binaria: 1 se WIN, 0 caso contrario
-        - diferenca_trofeus: trofeus do jogador menos do oponente
-        - hora_batalha: hora do dia (0-23)
-        - diferenca_coroas: coroas do jogador menos do oponente
-        - hp_torre_ratio: razao entre hp da torre do jogador e do oponente
-        - faixa_trofeus: categoria de faixa (ex: 2700-2800)
-    """
     df = df.copy()
 
     # vitoria como valor numerico para facilitar calculos

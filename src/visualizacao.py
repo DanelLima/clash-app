@@ -1,9 +1,3 @@
-"""
-visualizacao.py
-Gera graficos Matplotlib e retorna objetos Figure.
-Todos os graficos seguem o mesmo estilo para consistencia visual.
-"""
-
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import pandas as pd

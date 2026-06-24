@@ -1,8 +1,3 @@
-"""
-modelo.py
-Treina um Random Forest para prever o resultado da batalha (vitoria ou nao).
-"""
-
 import logging
 from dataclasses import dataclass, field
 
@@ -58,16 +53,6 @@ class ResultadoModelo:
 
 
 def treinar_modelo(df: pd.DataFrame) -> ResultadoModelo:
-    """
-    Treina o Random Forest com os dados fornecidos.
-
-    Passos:
-        1. Seleciona as features e o alvo
-        2. Divide em treino (80%) e teste (20%)
-        3. Cria pipeline: scaler + random forest
-        4. Calcula metricas no conjunto de teste
-        5. Faz validacao cruzada 5-fold no treino
-    """
     # garante que as features existam no dataframe
     faltando = [f for f in FEATURES if f not in df.columns]
     if faltando:

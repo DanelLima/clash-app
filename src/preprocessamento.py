@@ -1,8 +1,3 @@
-"""
-preprocessamento.py
-Carrega e limpa o dataset bruto de batalhas do Clash Royale.
-"""
-
 import logging
 import pandas as pd
 
