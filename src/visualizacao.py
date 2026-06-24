@@ -133,7 +133,7 @@ def grafico_diferenca_trofeus_boxplot(df: pd.DataFrame) -> plt.Figure:
         df.loc[df["result"] == "LOSS", "diferenca_trofeus"].dropna().values,
         df.loc[df["result"] == "DRAW", "diferenca_trofeus"].dropna().values,
     ]
-    ax.boxplot(grupos, labels=["Vitoria", "Derrota", "Empate"], patch_artist=True,
+    ax.boxplot(grupos, tick_labels=["Vitoria", "Derrota", "Empate"], patch_artist=True,
                boxprops=dict(facecolor=COR_PRINCIPAL, alpha=0.5))
     ax.axhline(0, color=COR_ALERTA, linestyle="--", linewidth=1)
 
